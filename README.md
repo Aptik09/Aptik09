@@ -59,7 +59,6 @@ I'm a Computer Science student passionate about software development, problem-so
 ![GitHub](https://img.shields.io/badge/github-%23121011.svg?style=for-the-badge&logo=github&logoColor=white)
 
 ### AI & Automation
-![Bhindi AI](https://img.shields.io/badge/Bhindi_AI-00D4FF?style=for-the-badge&logo=ai&logoColor=white)
 ![ChatGPT](https://img.shields.io/badge/chatGPT-74aa9c?style=for-the-badge&logo=openai&logoColor=white)
 
 ---
@@ -87,7 +86,7 @@ I'm a Computer Science student passionate about software development, problem-so
 ## 🚀 Featured Projects
 
 ### 🤖 Jarvis AI Assistant
-My personal AI assistant powered by Bhindi AI, featuring:
+My personal AI assistant powered by Open AI, featuring:
 - Natural language processing
 - Task automation
 - Secure data storage in private GitHub repository
