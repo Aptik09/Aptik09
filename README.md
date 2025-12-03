@@ -17,7 +17,7 @@
 
 ⚠️ **Private Access Only** - This AI assistant is exclusively for Aptik Pandey
 
-[🚀 **Click Here to Access Jarvis Portal**](https://aptik09.github.io/Aptik09/jarvis.html)
+[🚀 **Click Here to Access Jarvis Portal**][(https://aptik09.github.io/Aptik09/jarvis.html)]        (https://aptik09.github.io/bhindi-jarvis-ai/)
 
 ---
 
