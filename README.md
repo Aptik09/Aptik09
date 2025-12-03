@@ -12,6 +12,56 @@ I'm a Computer Science student passionate about software development, problem-so
 ![](https://nirzak-streak-stats.vercel.app/?user=Aptik09&theme=dark&hide_border=false)<br/>
 ![](https://github-readme-stats.vercel.app/api/top-langs/?username=Aptik09&theme=dark&hide_border=false&include_all_commits=false&count_private=false&layout=compact)
 
+## 📚 Subjects I've Studied (Thapar Institute of Engineering & Technology)
+
+### 🧩 **First Year**
+- Engineering Drawing (UES101)
+- Manufacturing Processes (UES102)
+- Mathematics I (UMA010)
+- Physics (UPH013)
+- Professional Communication (UHU003)
+- Chemistry (UCB009)
+- Electrical & Electronics Engineering (UES013)
+- Energy & Environment (UEN008)
+- Mathematics II (UMA004)
+- Programming for Problem Solving (UES103)
+
+---
+
+### 🧠 **Second Year**
+- Data Structures (UCS301)
+- Discrete Mathematical Structures (UCS405)
+- Engineering Design Project I – Mangonel (UTA016)
+- Numerical Linear Algebra (UMA021)
+- Object Oriented Programming (UTA018)
+- Operating Systems (UCS303)
+
+---
+
+### 🤖 **Third Year**
+- Aptitude Skills Building (UTD003)
+- Artificial Intelligence (UCS411)
+- Cognitive Computing (UCS420)
+- Database Management Systems (UCS310)
+- Design & Analysis of Algorithms (UCS415)
+- Engineering Design Project II (UTA024)
+- Evolutionary Psychology (UHU050)
+- Probability & Statistics (UMA401)
+
+---
+
+### 💻 **Fourth Year – Current Subjects**
+- Computer Architecture & Organization (UCS510)
+- Computer Networks (UCS520)
+- Machine Learning (UML501)
+- Quantum Materials (UES022)
+- Software Engineering (UCS503)
+- UI/UX Specialist (UCS542)
+- Introduction to Corporate Finance (UHU018)
+
+---
+
+
 ## 🏆 GitHub Trophies
 ![](https://github-profile-trophy.vercel.app/?username=Aptik09&theme=radical&no-frame=false&no-bg=false&margin-w=4)
 
