@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="refresh" content="0; url=jarvis.html">
+    <title>J.A.R.V.I.S - Initializing...</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            background: #000000;
+            color: #FFD700;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            overflow: hidden;
+        }
+        
+        .loader-container {
+            text-align: center;
+            animation: fadeIn 0.5s ease-in;
+        }
+        
+        .orb {
+            width: 100px;
+            height: 100px;
+            margin: 0 auto 30px;
+            background: radial-gradient(circle, #FFD700, #FFA500);
+            border-radius: 50%;
+            box-shadow: 
+                0 0 40px #FFD700,
+                0 0 80px #FFA500;
+            animation: pulse 2s ease-in-out infinite;
+        }
+        
+        h1 {
+            font-size: 3rem;
+            margin-bottom: 20px;
+            text-shadow: 0 0 20px #FFD700;
+        }
+        
+        p {
+            font-size: 1.2rem;
+            color: #FFA500;
+            animation: blink 1.5s ease-in-out infinite;
+        }
+        
+        @keyframes pulse {
+            0%, 100% {
+                transform: scale(1);
+                box-shadow: 0 0 40px #FFD700, 0 0 80px #FFA500;
+            }
+            50% {
+                transform: scale(1.1);
+                box-shadow: 0 0 60px #FFD700, 0 0 120px #FFA500;
+            }
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        
+        @keyframes blink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+    </style>
+</head>
+<body>
+    <div class="loader-container">
+        <div class="orb"></div>
+        <h1>J.A.R.V.I.S</h1>
+        <p>Initializing AI Systems...</p>
+    </div>
+    
+    <script>
+        // Immediate redirect
+        setTimeout(() => {
+            window.location.href = 'jarvis.html';
+        }, 1000);
+    </script>
+</body>
+</html>
