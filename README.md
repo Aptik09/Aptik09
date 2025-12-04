@@ -1,42 +1,76 @@
-# 🚀 [Access AI Assistant →](https://aptik09.github.io/Aptik09/)
+# 🤖 Welcome to My Digital Workshop
 
----
+<div align="center">
 
-## 💫 About Me
+### 👨‍💻 Aptik Pandey | AI Enthusiast | Full-Stack Developer
 
-I'm **Aptik Pandey**, a Computer Science Engineering student at **Thapar Institute (TIET)** and a passionate developer who enjoys building clean, modern, and impactful digital experiences.
-
-I love working on **web development, automation, and AI-powered tools**. I've built multiple personal projects, including my own smart assistant portal, and I'm always exploring new technologies to improve my skills.
-
-I also have a strong background in **content creation**, with experience in YouTube growth, editing, thumbnail design, and understanding platform algorithms. Blending creativity with technology is what I enjoy the most.
-
-✨ *Always learning. Always building. Always leveling up.*
-
-## 🌐 Socials
+*"Just a man in a cave with a box of scraps... building the future"*
 
 [![Email](https://img.shields.io/badge/Email-D14836?logo=gmail&logoColor=white)](mailto:aptikpandey9@gmail.com)
 
-## 💻 Tech Stack
-
-![CSS3](https://img.shields.io/badge/css3-%231572B6.svg?style=for-the-badge&logo=css3&logoColor=white)
-![JavaScript](https://img.shields.io/badge/javascript-%23323330.svg?style=for-the-badge&logo=javascript&logoColor=%23F7DF1E)
-![React](https://img.shields.io/badge/react-%2320232a.svg?style=for-the-badge&logo=react&logoColor=%2361DAFB)
-![HTML5](https://img.shields.io/badge/html5-%23E34F26.svg?style=for-the-badge&logo=html5&logoColor=white)
-![Python](https://img.shields.io/badge/python-3670A0?style=for-the-badge&logo=python&logoColor=ffdd54)
-![TypeScript](https://img.shields.io/badge/typescript-%23007ACC.svg?style=for-the-badge&logo=typescript&logoColor=white)
-
-## 📊 GitHub Stats
-
-![](https://github-readme-stats.vercel.app/api?username=aptik09&theme=dark&hide_border=false&include_all_commits=false&count_private=false)
-
-![](https://nirzak-streak-stats.vercel.app/?user=aptik09&theme=dark&hide_border=false)
-
-![](https://github-readme-stats.vercel.app/api/top-langs/?username=aptik09&theme=dark&hide_border=false&include_all_commits=false&count_private=false&layout=compact)
-
-## 🔝 Top Contributed Repos
-
-![](https://github-contributor-stats.vercel.app/api?username=aptik09&limit=5&theme=dark&combine_all_yearly_contributions=true)
+</div>
 
 ---
 
-[![](https://visitcount.itsvg.in/api?id=aptik09&icon=0&color=0)](https://visitcount.itsvg.in)
+## 🚀 Current Project: J.A.R.V.I.S - Personal AI Assistant
+
+Building my own **Iron Man-style AI assistant** powered by Bhindi AI platform. A sophisticated personal automation system with:
+
+- 🧠 **200+ Integrations** - GitHub, Gmail, Calendar, Slack, and more
+- 🎯 **Smart Automation** - Task scheduling, reminders, and workflow automation  
+- 🗣️ **Voice Interface** - Natural language interaction
+- 💾 **Memory System** - Remembers context and preferences
+- 🔍 **Web Intelligence** - Real-time search and information retrieval
+- ⚡ **Lightning Fast** - Instant responses and actions
+
+> *"Sometimes you gotta run before you can walk"* - Tony Stark
+
+---
+
+## 💻 Tech Arsenal
+
+![HTML5](https://img.shields.io/badge/html5-%23E34F26.svg?style=for-the-badge&logo=html5&logoColor=white)
+![CSS3](https://img.shields.io/badge/css3-%231572B6.svg?style=for-the-badge&logo=css3&logoColor=white)
+![JavaScript](https://img.shields.io/badge/javascript-%23323330.svg?style=for-the-badge&logo=javascript&logoColor=%23F7DF1E)
+![React](https://img.shields.io/badge/react-%2320232a.svg?style=for-the-badge&logo=react&logoColor=%2361DAFB)
+
+---
+
+## 🎓 About Me
+
+Computer Science Engineering student at **Thapar Institute (TIET)** with a passion for:
+
+- 🤖 **AI & Automation** - Building intelligent systems
+- 🌐 **Web Development** - Creating modern digital experiences  
+- 🎬 **Content Creation** - YouTube growth, editing, and design
+- 🚀 **Innovation** - Turning ideas into reality
+
+---
+
+## 📊 GitHub Stats
+
+<div align="center">
+
+![](https://github-readme-stats.vercel.app/api?username=aptik09&theme=radical&hide_border=true&include_all_commits=false&count_private=false)
+
+![](https://nirzak-streak-stats.vercel.app/?user=aptik09&theme=radical&hide_border=true)
+
+![](https://github-readme-stats.vercel.app/api/top-langs/?username=aptik09&theme=radical&hide_border=true&include_all_commits=false&count_private=false&layout=compact)
+
+</div>
+
+---
+
+## 🏆 Top Contributed Repos
+
+![](https://github-contributor-stats.vercel.app/api?username=aptik09&limit=5&theme=radical&combine_all_yearly_contributions=true)
+
+---
+
+<div align="center">
+
+### ✨ *"I am Iron Man"* ✨
+
+[![](https://visitcount.itsvg.in/api?id=aptik09&icon=2&color=6)](https://visitcount.itsvg.in)
+
+</div>
