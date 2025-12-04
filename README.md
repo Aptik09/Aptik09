@@ -8,21 +8,7 @@
 
 </div>
 
----
 
-<div align="center">
-
-## 💭 Daily Motivation
-
-*"Sometimes you gotta run before you can walk"* - Tony Stark
-
-*"I am Iron Man"*
-
-*"The truth is... I am Iron Man"*
-
-*"Genius, billionaire, playboy, philanthropist"*
-
-</div>
 
 ---
 
@@ -32,7 +18,7 @@
 
 ### [🤖 Enter AI Assistant Portal →](https://aptik09.github.io/Aptik09/)
 
-*Your personal JARVIS-style AI assistant powered by Bhindi AI*
+*Your personal AI assistant powered by Open  AI*
 
 </div>
 
