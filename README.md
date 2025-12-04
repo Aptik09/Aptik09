@@ -4,26 +4,37 @@
 
 ### 👨‍💻 Aptik Pandey | AI Enthusiast | Full-Stack Developer
 
-*"Just a man in a cave with a box of scraps... building the future"*
-
 [![Email](https://img.shields.io/badge/Email-D14836?logo=gmail&logoColor=white)](mailto:aptikpandey9@gmail.com)
 
 </div>
 
 ---
 
-## 🚀 Current Project: J.A.R.V.I.S - Personal AI Assistant
+<div align="center">
 
-Building my own **Iron Man-style AI assistant** powered by Bhindi AI platform. A sophisticated personal automation system with:
+## 💭 Daily Motivation
 
-- 🧠 **200+ Integrations** - GitHub, Gmail, Calendar, Slack, and more
-- 🎯 **Smart Automation** - Task scheduling, reminders, and workflow automation  
-- 🗣️ **Voice Interface** - Natural language interaction
-- 💾 **Memory System** - Remembers context and preferences
-- 🔍 **Web Intelligence** - Real-time search and information retrieval
-- ⚡ **Lightning Fast** - Instant responses and actions
+*"Sometimes you gotta run before you can walk"* - Tony Stark
 
-> *"Sometimes you gotta run before you can walk"* - Tony Stark
+*"I am Iron Man"*
+
+*"The truth is... I am Iron Man"*
+
+*"Genius, billionaire, playboy, philanthropist"*
+
+</div>
+
+---
+
+## 🚀 Access My AI Assistant
+
+<div align="center">
+
+### [🤖 Enter AI Assistant Portal →](https://aptik09.github.io/Aptik09/)
+
+*Your personal JARVIS-style AI assistant powered by Bhindi AI*
+
+</div>
 
 ---
 
@@ -69,7 +80,7 @@ Computer Science Engineering student at **Thapar Institute (TIET)** with a passi
 
 <div align="center">
 
-### ✨ *"I am Iron Man"* ✨
+### ✨ *Always learning. Always building. Always leveling up.* ✨
 
 [![](https://visitcount.itsvg.in/api?id=aptik09&icon=2&color=6)](https://visitcount.itsvg.in)
 
