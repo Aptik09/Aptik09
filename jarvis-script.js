@@ -1,22 +1,23 @@
 // ===== JARVIS AI SYSTEM - BHINDI POWERED =====
 // Configuration
 const CONFIG = {
-    OWNER_USERNAME: 'Aptik09', // Your GitHub username
+    OWNER_USERNAME: 'Aptik09',
     OWNER_NAME: 'Aptik Pandey',
-    PASSWORD: 'jarvis2024', // Backup password for manual access
-    BHINDI_API: 'https://api.bhindi.io/v1',
-    PRIVATE_REPO: 'Aptik09/bhindi-jarvis-ai' // Private data storage
+    PASSWORD: 'jarvis2024',
+    BHINDI_API: 'https://api.bhindi.io/v1/chat',
+    CHAT_ID: 'jarvis-' + Date.now(), // Unique chat session
+    PRIVATE_REPO: 'Aptik09/bhindi-jarvis-ai'
 };
 
 // State Management
 let isAuthenticated = false;
 let isOwner = false;
 let conversationHistory = [];
+let bhindiConnected = false;
 
 // ===== AUTO AUTHENTICATION FOR OWNER =====
 async function checkOwnerAccess() {
     try {
-        // Check if user is the owner by checking GitHub login status
         const response = await fetch('https://api.github.com/user', {
             headers: {
                 'Accept': 'application/vnd.github.v3+json'
@@ -89,9 +90,9 @@ function greetUser() {
     
     const messages = [
         `${greeting}, ${isOwner ? 'Sir' : 'Guest'}. J.A.R.V.I.S at your service.`,
-        'All systems operational. How may I assist you today?',
-        isOwner ? 'I have full access to your GitHub, calendar, email, and notes.' : 'Limited access mode. Some features are restricted.',
-        'Simply ask me anything, and I will handle it for you.'
+        'All systems operational. Bhindi AI backend connected.',
+        isOwner ? 'I have full access to your apps and services.' : 'Limited access mode. Some features are restricted.',
+        'Ask me anything - I can help with tasks, search, automation, and more.'
     ];
     
     const chatContainer = document.getElementById('chatContainer');
@@ -148,124 +149,91 @@ function addMessage(text, sender) {
 async function processUserMessage(message) {
     showTypingIndicator();
     
-    const intent = detectIntent(message);
+    try {
+        // Call Bhindi AI API
+        const response = await fetch(CONFIG.BHINDI_API, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                message: message,
+                chatId: CONFIG.CHAT_ID,
+                context: {
+                    isOwner: isOwner,
+                    userName: isOwner ? CONFIG.OWNER_NAME : 'Guest',
+                    conversationHistory: conversationHistory.slice(-5) // Last 5 messages for context
+                }
+            })
+        });
+        
+        removeTypingIndicator();
+        
+        if (response.ok) {
+            const data = await response.json();
+            const aiResponse = data.response || data.message || 'I processed your request.';
+            addMessage(aiResponse, 'jarvis');
+            bhindiConnected = true;
+        } else {
+            // Fallback to local processing if API fails
+            handleLocalProcessing(message);
+        }
+    } catch (error) {
+        console.error('Bhindi API Error:', error);
+        removeTypingIndicator();
+        handleLocalProcessing(message);
+    }
+}
+
+// ===== FALLBACK LOCAL PROCESSING =====
+function handleLocalProcessing(message) {
+    const lower = message.toLowerCase();
     
-    // Simulate processing
-    await new Promise(resolve => setTimeout(resolve, 1500));
-    
-    removeTypingIndicator();
-    
-    // Check if owner for full features
-    if (!isOwner && ['github', 'email', 'notes'].includes(intent)) {
-        addMessage('This feature is only available to the owner. You have limited access.', 'jarvis');
+    // Check permissions for restricted features
+    if (!isOwner && (lower.includes('email') || lower.includes('github') || lower.includes('note'))) {
+        addMessage('⚠️ This feature is only available to the owner. You have limited access.', 'jarvis');
         return;
     }
     
-    switch (intent) {
-        case 'schedule':
-            handleSchedule(message);
-            break;
-        case 'notes':
-            handleNotes(message);
-            break;
-        case 'github':
-            handleGitHub(message);
-            break;
-        case 'email':
-            handleEmail(message);
-            break;
-        case 'search':
-            handleSearch(message);
-            break;
-        case 'weather':
-            handleWeather(message);
-            break;
-        case 'backend':
-            handleBackendSetup();
-            break;
-        default:
-            handleGeneral(message);
+    // Intent detection and responses
+    if (lower.includes('weather')) {
+        addMessage('🌤️ Weather service is available! To get real-time weather, I need to connect to Bhindi AI backend.', 'jarvis');
+        addMessage('Visit https://bhindi.io to set up your account and I\'ll provide live weather updates.', 'jarvis');
+    } else if (lower.includes('schedule') || lower.includes('remind')) {
+        addMessage('📅 I can help you schedule tasks and reminders!', 'jarvis');
+        addMessage('Example: "Remind me to call mom at 5 PM tomorrow"', 'jarvis');
+        addMessage('For full scheduling features, connect to Bhindi AI at https://bhindi.io', 'jarvis');
+    } else if (lower.includes('email') || lower.includes('mail')) {
+        addMessage('📧 Gmail integration is ready through Bhindi AI!', 'jarvis');
+        addMessage('Connect your Gmail at https://bhindi.io to read, send, and manage emails.', 'jarvis');
+    } else if (lower.includes('github') || lower.includes('repo')) {
+        addMessage('💻 GitHub integration is available!', 'jarvis');
+        addMessage('I can manage repositories, create issues, review PRs, and more.', 'jarvis');
+        addMessage('Connect GitHub at https://bhindi.io for full access.', 'jarvis');
+    } else if (lower.includes('note') || lower.includes('remember')) {
+        addMessage('📝 I can save notes to your private repository!', 'jarvis');
+        addMessage(`Notes will be stored securely in: ${CONFIG.PRIVATE_REPO}`, 'jarvis');
+    } else if (lower.includes('search') || lower.includes('find')) {
+        addMessage('🔍 I can search the web using Perplexity AI!', 'jarvis');
+        addMessage('Connect to Bhindi AI for real-time search results.', 'jarvis');
+    } else if (lower.includes('help') || lower.includes('what can you do')) {
+        addMessage('I\'m JARVIS, powered by Bhindi AI. I can help you with:', 'jarvis');
+        addMessage('📧 Email management | 📅 Scheduling | 💻 GitHub | 🔍 Web search | 📝 Notes | 🌤️ Weather | And 200+ more integrations!', 'jarvis');
+        addMessage('To unlock all features, visit https://bhindi.io and connect your apps.', 'jarvis');
+    } else if (lower.includes('time')) {
+        const now = new Date();
+        addMessage(`⏰ Current time: ${now.toLocaleTimeString()}`, 'jarvis');
+    } else if (lower.includes('date') || lower.includes('today')) {
+        const now = new Date();
+        addMessage(`📅 Today is ${now.toLocaleDateString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' })}`, 'jarvis');
+    } else if (lower.includes('hello') || lower.includes('hi') || lower.includes('hey')) {
+        addMessage(`Hello! How can I assist you today?`, 'jarvis');
+    } else {
+        // Generic response
+        addMessage('I understand your request. For full AI capabilities, please connect to Bhindi AI.', 'jarvis');
+        addMessage('Visit https://bhindi.io to set up your account and unlock all features.', 'jarvis');
+        addMessage('In the meantime, try asking about: weather, schedule, email, GitHub, or notes.', 'jarvis');
     }
-}
-
-function detectIntent(message) {
-    const lower = message.toLowerCase();
-    
-    if (lower.includes('schedule') || lower.includes('remind') || lower.includes('calendar')) {
-        return 'schedule';
-    }
-    if (lower.includes('note') || lower.includes('remember') || lower.includes('save')) {
-        return 'notes';
-    }
-    if (lower.includes('github') || lower.includes('repo') || lower.includes('code')) {
-        return 'github';
-    }
-    if (lower.includes('email') || lower.includes('mail') || lower.includes('send')) {
-        return 'email';
-    }
-    if (lower.includes('search') || lower.includes('find') || lower.includes('look up')) {
-        return 'search';
-    }
-    if (lower.includes('weather') || lower.includes('temperature')) {
-        return 'weather';
-    }
-    if (lower.includes('backend') || lower.includes('configure') || lower.includes('setup') || lower.includes('connect')) {
-        return 'backend';
-    }
-    
-    return 'general';
-}
-
-// ===== INTENT HANDLERS =====
-function handleSchedule(message) {
-    addMessage('📅 Scheduler is ready! I can help you create reminders and scheduled tasks using Bhindi Scheduler.', 'jarvis');
-    addMessage('Example: "Remind me to call mom at 5 PM tomorrow" or "Schedule a meeting for next Monday at 2 PM"', 'jarvis');
-}
-
-function handleNotes(message) {
-    addMessage(`📝 I'll save that to your private repository: ${CONFIG.PRIVATE_REPO}`, 'jarvis');
-    addMessage('Your notes are encrypted and stored securely in your private GitHub repository.', 'jarvis');
-}
-
-function handleGitHub(message) {
-    addMessage('💻 GitHub integration is active! I can manage your repositories, create issues, review PRs, and more.', 'jarvis');
-    addMessage('Try: "Show my repositories" or "Create an issue in [repo-name]"', 'jarvis');
-}
-
-function handleEmail(message) {
-    addMessage('📧 Gmail integration ready! I can read, send, and organize your emails.', 'jarvis');
-    addMessage('Try: "Check my emails" or "Send an email to [person]"', 'jarvis');
-}
-
-function handleSearch(message) {
-    addMessage('🔍 I can search the web using Perplexity AI for accurate, real-time information.', 'jarvis');
-    addMessage('What would you like me to search for?', 'jarvis');
-}
-
-function handleWeather(message) {
-    addMessage('🌤️ Weather service is available! I can get current weather and forecasts.', 'jarvis');
-    addMessage('Try: "What\'s the weather in [city]?" or "Weather forecast for tomorrow"', 'jarvis');
-}
-
-function handleBackendSetup() {
-    addMessage('⚙️ **Bhindi AI Backend Setup Guide:**', 'jarvis');
-    addMessage('1. Go to https://bhindi.io and create an account', 'jarvis');
-    addMessage('2. Connect your GitHub, Gmail, and other services', 'jarvis');
-    addMessage('3. Get your API key from Settings', 'jarvis');
-    addMessage('4. I\'ll automatically connect once you authorize Bhindi AI', 'jarvis');
-    addMessage('📚 Full documentation: https://docs.bhindi.io', 'jarvis');
-}
-
-function handleGeneral(message) {
-    const responses = [
-        'I understand. Let me help you with that.',
-        'Processing your request. All systems are operational.',
-        'I\'m here to assist. What else can I do for you?',
-        'Noted. I have access to 200+ integrations through Bhindi AI.'
-    ];
-    
-    const response = responses[Math.floor(Math.random() * responses.length)];
-    addMessage(response, 'jarvis');
 }
 
 // ===== QUICK ACTIONS =====
@@ -320,7 +288,6 @@ function showError(message) {
 }
 
 function playJarvisSound() {
-    // Optional: Add sound effect when JARVIS activates
     console.log('🎵 JARVIS activated');
 }
 
@@ -352,4 +319,5 @@ window.addEventListener('load', async function() {
     }
     
     console.log('✨ J.A.R.V.I.S Online');
+    console.log('🔌 Bhindi AI backend ready');
 });
