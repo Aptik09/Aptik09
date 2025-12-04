@@ -1,17 +1,25 @@
-// ===== JARVIS AI SYSTEM - BHINDI POWERED =====
+// AI Assistant Configuration
 const CONFIG = {
     OWNER_USERNAME: 'Aptik09',
     OWNER_NAME: 'Aptik Pandey',
-    PASSWORD: 'jarvis2024',
-    PRIVATE_REPO: 'Aptik09/bhindi-jarvis-ai'
+    PASSWORD: 'aptik2024',
+    BHINDI_API_URL: 'https://api.bhindi.io/v1/chat',
+    CHAT_ID: null
 };
 
 let isAuthenticated = false;
 let isOwner = false;
-let conversationHistory = [];
+let bhindiApiKey = null;
 
-// ===== AUTO AUTHENTICATION =====
+// Initialize
+document.addEventListener('DOMContentLoaded', () => {
+    checkOwnerAccess();
+});
+
+// Check if owner is logged in via GitHub
 async function checkOwnerAccess() {
+    const authStatus = document.getElementById('authStatus');
+    
     try {
         const response = await fetch('https://api.github.com/user', {
             headers: { 'Accept': 'application/vnd.github.v3+json' },
@@ -23,76 +31,84 @@ async function checkOwnerAccess() {
             if (userData.login === CONFIG.OWNER_USERNAME) {
                 isOwner = true;
                 isAuthenticated = true;
-                autoLogin();
-                return true;
+                showMainInterface();
+                greetUser();
+                return;
             }
         }
     } catch (error) {
-        console.log('Not logged in to GitHub');
+        console.log('GitHub auth check failed');
     }
-    return false;
+    
+    // Show password form for non-owners
+    authStatus.style.display = 'none';
+    document.getElementById('authForm').style.display = 'block';
 }
 
-function autoLogin() {
-    showMainInterface();
-    greetUser();
-}
-
-// ===== AUTHENTICATION =====
+// Password authentication
 function authenticate() {
     const passwordInput = document.getElementById('passwordInput');
-    const password = passwordInput.value;
+    const password = passwordInput.value.trim();
     
     if (password === CONFIG.PASSWORD) {
         isAuthenticated = true;
         showMainInterface();
         greetUser();
     } else {
-        showError('Access Denied. Invalid credentials.');
         passwordInput.value = '';
-        passwordInput.style.borderColor = '#FF0000';
+        passwordInput.style.borderColor = 'var(--error)';
         setTimeout(() => {
-            passwordInput.style.borderColor = 'rgba(255, 215, 0, 0.5)';
+            passwordInput.style.borderColor = 'var(--border)';
         }, 1000);
     }
 }
 
+// Show main interface
 function showMainInterface() {
-    document.getElementById('welcomeScreen').classList.remove('active');
-    document.getElementById('mainInterface').classList.add('active');
+    document.getElementById('authScreen').style.display = 'none';
+    document.getElementById('mainInterface').style.display = 'flex';
+    document.getElementById('userName').textContent = isOwner ? CONFIG.OWNER_NAME : 'Guest';
+    document.getElementById('logoutBtn').style.display = 'block';
+    
+    // Load Bhindi API key from localStorage
+    bhindiApiKey = localStorage.getItem('bhindi_api_key');
 }
 
+// Logout
 function logout() {
     isAuthenticated = false;
     isOwner = false;
-    document.getElementById('mainInterface').classList.remove('active');
-    document.getElementById('welcomeScreen').classList.add('active');
+    document.getElementById('mainInterface').style.display = 'none';
+    document.getElementById('authScreen').style.display = 'flex';
+    document.getElementById('chatContainer').innerHTML = '';
     document.getElementById('passwordInput').value = '';
-    conversationHistory = [];
 }
 
-// ===== GREETING =====
+// Greeting
 function greetUser() {
     const hour = new Date().getHours();
     let greeting = hour < 12 ? 'Good morning' : hour < 18 ? 'Good afternoon' : 'Good evening';
     
     const messages = [
-        `${greeting}, ${isOwner ? 'Sir' : 'Guest'}. J.A.R.V.I.S at your service.`,
-        'All systems operational. I\'m ready to assist you.',
-        isOwner ? 'I can help with GitHub, scheduling, notes, weather, and more.' : 'Limited access mode active.',
-        'What can I do for you today?'
+        `${greeting}${isOwner ? ', ' + CONFIG.OWNER_NAME : ''}. I'm your AI Assistant.`,
+        'I can help you with tasks, answer questions, and automate workflows.',
+        'What can I help you with today?'
     ];
     
-    const chatContainer = document.getElementById('chatContainer');
-    chatContainer.innerHTML = '';
-    
     messages.forEach((msg, index) => {
-        setTimeout(() => addMessage(msg, 'jarvis'), index * 800);
+        setTimeout(() => addMessage(msg, 'assistant'), index * 600);
     });
 }
 
-// ===== MESSAGING =====
-function sendMessage() {
+// Handle key press
+function handleKeyPress(event) {
+    if (event.key === 'Enter') {
+        sendMessage();
+    }
+}
+
+// Send message
+async function sendMessage() {
     const input = document.getElementById('messageInput');
     const message = input.value.trim();
     
@@ -100,231 +116,170 @@ function sendMessage() {
     
     addMessage(message, 'user');
     input.value = '';
-    processMessage(message);
-}
-
-function addMessage(text, sender) {
-    const chatContainer = document.getElementById('chatContainer');
-    const messageDiv = document.createElement('div');
-    messageDiv.className = `message ${sender}-message`;
     
-    if (sender === 'jarvis') {
-        messageDiv.innerHTML = `
-            <div class="jarvis-avatar"></div>
-            <div class="message-content"><p>${text}</p></div>
-        `;
+    // Show typing indicator
+    showTypingIndicator();
+    
+    // Process with Bhindi AI if available, otherwise use fallback
+    if (bhindiApiKey) {
+        await processBhindiMessage(message);
     } else {
-        messageDiv.innerHTML = `
-            <div class="message-content user-content"><p>${text}</p></div>
-            <div class="user-avatar">👤</div>
-        `;
+        await processFallbackMessage(message);
     }
     
-    chatContainer.appendChild(messageDiv);
-    chatContainer.scrollTop = chatContainer.scrollHeight;
-    conversationHistory.push({ role: sender, content: text });
+    removeTypingIndicator();
 }
 
-// ===== MESSAGE PROCESSING =====
-async function processMessage(message) {
-    showTypingIndicator();
-    await new Promise(resolve => setTimeout(resolve, 1000));
-    removeTypingIndicator();
+// Process message with Bhindi AI
+async function processBhindiMessage(message) {
+    try {
+        const response = await fetch(CONFIG.BHINDI_API_URL, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${bhindiApiKey}`
+            },
+            body: JSON.stringify({
+                chatId: CONFIG.CHAT_ID,
+                message: message
+            })
+        });
+        
+        if (response.ok) {
+            const data = await response.json();
+            addMessage(data.response, 'assistant');
+            CONFIG.CHAT_ID = data.chatId;
+        } else {
+            throw new Error('API request failed');
+        }
+    } catch (error) {
+        console.error('Bhindi AI error:', error);
+        addMessage('I encountered an error connecting to the AI backend. Using fallback mode.', 'assistant');
+        await processFallbackMessage(message);
+    }
+}
+
+// Fallback message processing
+async function processFallbackMessage(message) {
+    await new Promise(resolve => setTimeout(resolve, 800));
     
     const lower = message.toLowerCase();
     
-    // Permission check
-    if (!isOwner && (lower.includes('email') || lower.includes('github') || lower.includes('private'))) {
-        addMessage('⚠️ This feature is restricted to the owner only.', 'jarvis');
-        return;
-    }
-    
     // Greetings
     if (lower.match(/\b(hi|hello|hey|greetings)\b/)) {
-        const greetings = [
-            'Hello! How may I assist you?',
-            'Greetings! What can I do for you?',
-            'Hi there! Ready to help.',
-            'Hello! I\'m at your service.'
-        ];
-        addMessage(greetings[Math.floor(Math.random() * greetings.length)], 'jarvis');
+        addMessage('Hello! How can I assist you today?', 'assistant');
         return;
     }
     
     // Time
     if (lower.includes('time')) {
         const now = new Date();
-        addMessage(`⏰ Current time: ${now.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', second: '2-digit' })}`, 'jarvis');
+        addMessage(`Current time: ${now.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', second: '2-digit' })}`, 'assistant');
         return;
     }
     
     // Date
     if (lower.includes('date') || lower.includes('today')) {
         const now = new Date();
-        addMessage(`📅 Today is ${now.toLocaleDateString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' })}`, 'jarvis');
+        addMessage(`Today is ${now.toLocaleDateString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' })}`, 'assistant');
         return;
     }
     
-    // Weather
-    if (lower.includes('weather')) {
-        addMessage('🌤️ Weather service available!', 'jarvis');
-        addMessage('For real-time weather data, connect to Bhindi AI at https://bhindi.io', 'jarvis');
-        addMessage('Once connected, I can provide detailed weather forecasts for any location.', 'jarvis');
+    // Setup Bhindi
+    if (lower.includes('setup') || lower.includes('connect') || lower.includes('bhindi')) {
+        addMessage('To unlock full AI capabilities:', 'assistant');
+        addMessage('1. Visit https://bhindi.io and create an account', 'assistant');
+        addMessage('2. Generate an API key from Settings', 'assistant');
+        addMessage('3. Save it here by typing: /setkey YOUR_API_KEY', 'assistant');
         return;
     }
     
-    // Schedule/Reminders
-    if (lower.includes('schedule') || lower.includes('remind')) {
-        addMessage('📅 Scheduling capabilities ready!', 'jarvis');
-        addMessage('I can create reminders and scheduled tasks through Bhindi AI.', 'jarvis');
-        addMessage('Example: "Remind me to call mom at 5 PM tomorrow"', 'jarvis');
-        addMessage('Connect at https://bhindi.io for full scheduling features.', 'jarvis');
-        return;
-    }
-    
-    // Email
-    if (lower.includes('email') || lower.includes('mail')) {
-        addMessage('📧 Email management available!', 'jarvis');
-        addMessage('Through Bhindi AI, I can:', 'jarvis');
-        addMessage('• Read and organize your emails\n• Send emails\n• Search your inbox\n• Set up filters', 'jarvis');
-        addMessage('Connect Gmail at https://bhindi.io', 'jarvis');
-        return;
-    }
-    
-    // GitHub
-    if (lower.includes('github') || lower.includes('repo')) {
-        addMessage('💻 GitHub integration ready!', 'jarvis');
-        addMessage('I can help you:', 'jarvis');
-        addMessage('• Manage repositories\n• Create and close issues\n• Review pull requests\n• Check commit history', 'jarvis');
-        addMessage('Connect GitHub at https://bhindi.io', 'jarvis');
-        return;
-    }
-    
-    // Notes
-    if (lower.includes('note') || lower.includes('remember') || lower.includes('save')) {
-        addMessage('📝 Note-taking system active!', 'jarvis');
-        addMessage(`Your notes are securely stored in: ${CONFIG.PRIVATE_REPO}`, 'jarvis');
-        addMessage('I can save and retrieve notes for you through Bhindi AI.', 'jarvis');
-        return;
-    }
-    
-    // Search
-    if (lower.includes('search') || lower.includes('find') || lower.includes('look up')) {
-        addMessage('🔍 Web search powered by Perplexity AI!', 'jarvis');
-        addMessage('I can search the web for accurate, real-time information.', 'jarvis');
-        addMessage('Connect to Bhindi AI for live search results.', 'jarvis');
+    // Set API key
+    if (lower.startsWith('/setkey ')) {
+        const key = message.substring(8).trim();
+        if (key.length > 20) {
+            localStorage.setItem('bhindi_api_key', key);
+            bhindiApiKey = key;
+            addMessage('✓ API key saved successfully! Full AI capabilities are now active.', 'assistant');
+        } else {
+            addMessage('Invalid API key format. Please check and try again.', 'assistant');
+        }
         return;
     }
     
     // Help
-    if (lower.includes('help') || lower.includes('what can you do') || lower.includes('capabilities')) {
-        addMessage('🤖 I\'m JARVIS - Your Personal AI Assistant', 'jarvis');
-        addMessage('**Current Capabilities:**', 'jarvis');
-        addMessage('✅ Time & Date information\n✅ Basic conversations\n✅ System status', 'jarvis');
-        addMessage('**With Bhindi AI Connection:**', 'jarvis');
-        addMessage('📧 Email • 📅 Calendar • 💻 GitHub • 🔍 Search • 🌤️ Weather • 📝 Notes • And 200+ more!', 'jarvis');
-        addMessage('Visit https://bhindi.io to unlock full capabilities.', 'jarvis');
+    if (lower.includes('help') || lower.includes('what can you do')) {
+        addMessage('I can help you with:', 'assistant');
+        addMessage('• Answering questions\n• Time and date information\n• General assistance', 'assistant');
+        addMessage('\nFor advanced features (scheduling, email, GitHub, etc.), connect to Bhindi AI by typing "setup"', 'assistant');
         return;
     }
     
     // Status
-    if (lower.includes('status') || lower.includes('how are you')) {
-        addMessage('✅ All systems operational!', 'jarvis');
-        addMessage('Core functions: Online ✓', 'jarvis');
-        addMessage('Authentication: Active ✓', 'jarvis');
-        addMessage('Bhindi AI: Ready for connection', 'jarvis');
-        return;
-    }
-    
-    // Bhindi/Setup
-    if (lower.includes('bhindi') || lower.includes('setup') || lower.includes('connect')) {
-        addMessage('🔗 Bhindi AI Setup Guide:', 'jarvis');
-        addMessage('1️⃣ Visit https://bhindi.io', 'jarvis');
-        addMessage('2️⃣ Create your account', 'jarvis');
-        addMessage('3️⃣ Connect your apps (GitHub, Gmail, etc.)', 'jarvis');
-        addMessage('4️⃣ Start using JARVIS with full AI power!', 'jarvis');
-        addMessage('📚 Documentation: https://docs.bhindi.io', 'jarvis');
+    if (lower.includes('status')) {
+        const status = bhindiApiKey ? 'Connected ✓' : 'Not connected';
+        addMessage(`System Status: Online ✓\nBhindi AI: ${status}`, 'assistant');
         return;
     }
     
     // Default response
-    const responses = [
-        'I understand. For advanced AI responses, please connect to Bhindi AI.',
-        'Interesting question! Connect to Bhindi AI for detailed answers.',
-        'I can help better with Bhindi AI connected. Visit https://bhindi.io',
-        'That\'s a great question! Full AI capabilities available at https://bhindi.io'
-    ];
-    addMessage(responses[Math.floor(Math.random() * responses.length)], 'jarvis');
-    addMessage('Try asking about: time, date, weather, schedule, email, GitHub, or help.', 'jarvis');
+    addMessage('I understand you\'re asking about: "' + message + '"', 'assistant');
+    addMessage('For more intelligent responses, connect to Bhindi AI by typing "setup"', 'assistant');
 }
 
-// ===== QUICK ACTIONS =====
-function quickAction(action) {
-    const actions = {
-        schedule: 'Show me my schedule',
-        notes: 'Show my notes',
-        github: 'Show my GitHub repositories',
-        email: 'Check my emails'
-    };
-    document.getElementById('messageInput').value = actions[action];
-    sendMessage();
+// Add message to chat
+function addMessage(text, sender) {
+    const chatContainer = document.getElementById('chatContainer');
+    const messageDiv = document.createElement('div');
+    messageDiv.className = `message ${sender}-message`;
+    
+    const avatar = document.createElement('div');
+    avatar.className = 'message-avatar';
+    avatar.textContent = sender === 'assistant' ? '🤖' : '👤';
+    
+    const content = document.createElement('div');
+    content.className = 'message-content';
+    
+    const p = document.createElement('p');
+    p.textContent = text;
+    content.appendChild(p);
+    
+    messageDiv.appendChild(avatar);
+    messageDiv.appendChild(content);
+    
+    chatContainer.appendChild(messageDiv);
+    chatContainer.scrollTop = chatContainer.scrollHeight;
 }
 
-// ===== UI HELPERS =====
+// Typing indicator
 function showTypingIndicator() {
     const chatContainer = document.getElementById('chatContainer');
     const typingDiv = document.createElement('div');
-    typingDiv.className = 'message jarvis-message typing-indicator';
+    typingDiv.className = 'message assistant-message';
     typingDiv.id = 'typingIndicator';
-    typingDiv.innerHTML = `
-        <div class="jarvis-avatar"></div>
-        <div class="message-content">
-            <div class="typing-dots">
-                <span></span><span></span><span></span>
-            </div>
-        </div>
-    `;
+    
+    const avatar = document.createElement('div');
+    avatar.className = 'message-avatar';
+    avatar.textContent = '🤖';
+    
+    const content = document.createElement('div');
+    content.className = 'message-content';
+    
+    const indicator = document.createElement('div');
+    indicator.className = 'typing-indicator';
+    indicator.innerHTML = '<div class="typing-dot"></div><div class="typing-dot"></div><div class="typing-dot"></div>';
+    
+    content.appendChild(indicator);
+    typingDiv.appendChild(avatar);
+    typingDiv.appendChild(content);
+    
     chatContainer.appendChild(typingDiv);
     chatContainer.scrollTop = chatContainer.scrollHeight;
 }
 
 function removeTypingIndicator() {
     const indicator = document.getElementById('typingIndicator');
-    if (indicator) indicator.remove();
-}
-
-function showError(message) {
-    const errorDiv = document.createElement('div');
-    errorDiv.className = 'error-message';
-    errorDiv.textContent = message;
-    errorDiv.style.cssText = 'color: #FF0000; text-align: center; margin-top: 10px;';
-    
-    const accessPanel = document.querySelector('.access-panel');
-    const existingError = accessPanel.querySelector('.error-message');
-    if (existingError) existingError.remove();
-    
-    accessPanel.appendChild(errorDiv);
-    setTimeout(() => errorDiv.remove(), 3000);
-}
-
-// ===== KEYBOARD EVENTS =====
-document.addEventListener('keypress', function(e) {
-    if (e.key === 'Enter') {
-        const passwordInput = document.getElementById('passwordInput');
-        const messageInput = document.getElementById('messageInput');
-        
-        if (document.activeElement === passwordInput) {
-            authenticate();
-        } else if (document.activeElement === messageInput) {
-            sendMessage();
-        }
+    if (indicator) {
+        indicator.remove();
     }
-});
-
-// ===== INITIALIZE =====
-window.addEventListener('load', async function() {
-    console.log('🤖 J.A.R.V.I.S Initializing...');
-    const hasOwnerAccess = await checkOwnerAccess();
-    console.log(hasOwnerAccess ? '✅ Owner auto-login' : '🔒 Guest mode');
-    console.log('✨ J.A.R.V.I.S Online');
-});
+}
