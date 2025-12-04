@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>J.A.R.V.I.S - Just A Rather Very Intelligent System</title>
+    <link rel="stylesheet" href="jarvis-styles.css">
+</head>
+<body>
+    <!-- Background particles -->
+    <div id="particles"></div>
+    
+    <!-- Main Jarvis Container -->
+    <div class="jarvis-container">
+        <!-- Jarvis Orb -->
+        <div class="jarvis-orb-container">
+            <div class="jarvis-orb">
+                <div class="orb-core"></div>
+                <div class="orb-ring ring-1"></div>
+                <div class="orb-ring ring-2"></div>
+                <div class="orb-ring ring-3"></div>
+                <div class="orb-particles"></div>
+            </div>
+        </div>
+
+        <!-- Welcome Screen -->
+        <div id="welcomeScreen" class="welcome-screen active">
+            <h1 class="glitch-text">J.A.R.V.I.S</h1>
+            <p class="subtitle">Just A Rather Very Intelligent System</p>
+            <p class="owner-text">Private AI Assistant for Aptik Pandey</p>
+            
+            <div class="access-panel">
+                <div class="lock-icon">🔒</div>
+                <input type="password" id="passwordInput" placeholder="Enter Access Code" class="password-input">
+                <button onclick="authenticate()" class="access-button">
+                    <span>AUTHENTICATE</span>
+                </button>
+                <p class="warning-text">⚠️ Unauthorized access is prohibited</p>
+            </div>
+
+            <div class="system-status">
+                <div class="status-item">
+                    <span class="status-label">System Status:</span>
+                    <span class="status-value online">ONLINE</span>
+                </div>
+                <div class="status-item">
+                    <span class="status-label">Security:</span>
+                    <span class="status-value">MAXIMUM</span>
+                </div>
+                <div class="status-item">
+                    <span class="status-label">AI Core:</span>
+                    <span class="status-value online">ACTIVE</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Main Interface (Hidden until authenticated) -->
+        <div id="mainInterface" class="main-interface">
+            <!-- Header -->
+            <div class="interface-header">
+                <div class="header-left">
+                    <div class="jarvis-mini-orb"></div>
+                    <h2>J.A.R.V.I.S</h2>
+                </div>
+                <div class="header-right">
+                    <span class="user-name">Aptik Pandey</span>
+                    <button onclick="logout()" class="logout-btn">Logout</button>
+                </div>
+            </div>
+
+            <!-- Chat Container -->
+            <div class="chat-container" id="chatContainer">
+                <div class="welcome-message">
+                    <div class="jarvis-avatar"></div>
+                    <div class="message-content">
+                        <p><strong>Good evening, Sir.</strong></p>
+                        <p>J.A.R.V.I.S at your service. How may I assist you today?</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Input Area -->
+            <div class="input-area">
+                <div class="input-container">
+                    <button class="attach-btn" title="Attach file">📎</button>
+                    <input type="text" id="messageInput" placeholder="Ask J.A.R.V.I.S anything..." class="message-input">
+                    <button onclick="sendMessage()" class="send-btn">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+                            <path d="M22 2L11 13M22 2L15 22L11 13M22 2L2 9L11 13" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                    </button>
+                </div>
+                <div class="quick-actions">
+                    <button class="quick-btn" onclick="quickAction('schedule')">📅 Schedule</button>
+                    <button class="quick-btn" onclick="quickAction('notes')">📝 Notes</button>
+                    <button class="quick-btn" onclick="quickAction('github')">💻 GitHub</button>
+                    <button class="quick-btn" onclick="quickAction('email')">📧 Email</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="jarvis-script.js"></script>
+</body>
+</html>
