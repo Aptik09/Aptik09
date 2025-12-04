@@ -1,0 +1,48 @@
+{
+  "version": "1.0.0",
+  "environment": "development",
+  "features": {
+    "chat": {
+      "enabled": true,
+      "model": "gpt-4",
+      "maxTokens": 2000,
+      "temperature": 0.7
+    },
+    "email": {
+      "enabled": false,
+      "provider": "gmail",
+      "note": "Will be enabled in Phase 4"
+    },
+    "calendar": {
+      "enabled": false,
+      "provider": "google-calendar",
+      "note": "Will be enabled in Phase 4"
+    },
+    "github": {
+      "enabled": false,
+      "note": "Will be enabled in Phase 4"
+    },
+    "search": {
+      "enabled": false,
+      "provider": "perplexity",
+      "note": "Will be enabled in Phase 3"
+    }
+  },
+  "security": {
+    "passwordProtection": true,
+    "rateLimiting": {
+      "enabled": true,
+      "maxRequestsPerMinute": 60
+    },
+    "encryption": {
+      "enabled": true,
+      "algorithm": "AES-256"
+    }
+  },
+  "ui": {
+    "theme": "dark",
+    "primaryColor": "#ffd700",
+    "secondaryColor": "#ff8c00",
+    "animations": true
+  }
+}
