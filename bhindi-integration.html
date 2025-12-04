@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JARVIS - Bhindi AI Integration</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            background: linear-gradient(135deg, #000000 0%, #1a1a1a 100%);
+            color: #FFD700;
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 40px;
+            background: rgba(0, 0, 0, 0.8);
+            border: 2px solid #FFD700;
+            border-radius: 20px;
+            box-shadow: 0 0 40px rgba(255, 215, 0, 0.3);
+        }
+        
+        h1 {
+            text-align: center;
+            font-size: 3rem;
+            margin-bottom: 10px;
+            text-shadow: 0 0 20px #FFD700;
+        }
+        
+        .subtitle {
+            text-align: center;
+            color: #FFA500;
+            margin-bottom: 40px;
+        }
+        
+        .step {
+            background: rgba(255, 215, 0, 0.1);
+            padding: 20px;
+            margin: 20px 0;
+            border-left: 4px solid #FFD700;
+            border-radius: 8px;
+        }
+        
+        .step h2 {
+            color: #FFD700;
+            margin-bottom: 10px;
+        }
+        
+        .step p {
+            color: #FFF;
+            line-height: 1.6;
+            margin: 10px 0;
+        }
+        
+        .button {
+            display: inline-block;
+            background: linear-gradient(135deg, #FFD700, #FFA500);
+            color: #000;
+            padding: 15px 30px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: bold;
+            margin: 10px 5px;
+            transition: transform 0.3s;
+        }
+        
+        .button:hover {
+            transform: scale(1.05);
+        }
+        
+        .code-block {
+            background: #1a1a1a;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 10px 0;
+            overflow-x: auto;
+        }
+        
+        .code-block code {
+            color: #00FF00;
+            font-family: 'Courier New', monospace;
+        }
+        
+        .status {
+            text-align: center;
+            padding: 20px;
+            margin: 20px 0;
+            background: rgba(255, 215, 0, 0.1);
+            border-radius: 8px;
+        }
+        
+        .status.connected {
+            border: 2px solid #00FF00;
+        }
+        
+        .status.disconnected {
+            border: 2px solid #FF0000;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🤖 J.A.R.V.I.S</h1>
+        <p class="subtitle">Bhindi AI Integration Setup</p>
+        
+        <div class="status disconnected" id="status">
+            <h3>⚠️ Bhindi AI Not Connected</h3>
+            <p>Follow the steps below to connect JARVIS to Bhindi AI</p>
+        </div>
+        
+        <div class="step">
+            <h2>📋 Step 1: Create Bhindi Account</h2>
+            <p>First, you need to create a Bhindi AI account to access all the powerful integrations.</p>
+            <a href="https://bhindi.io" target="_blank" class="button">Go to Bhindi.io</a>
+        </div>
+        
+        <div class="step">
+            <h2>🔗 Step 2: Connect Your Apps</h2>
+            <p>Once logged in, connect the apps you want JARVIS to access:</p>
+            <ul style="color: #FFF; margin-left: 20px; margin-top: 10px;">
+                <li>✅ GitHub - Manage repositories, issues, PRs</li>
+                <li>✅ Gmail - Read, send, organize emails</li>
+                <li>✅ Google Calendar - Schedule and manage events</li>
+                <li>✅ Weather APIs - Get real-time weather</li>
+                <li>✅ And 200+ more integrations!</li>
+            </ul>
+        </div>
+        
+        <div class="step">
+            <h2>💬 Step 3: Use JARVIS Through Bhindi</h2>
+            <p>The easiest way to use JARVIS with full AI capabilities is directly through Bhindi:</p>
+            <a href="https://bhindi.io/chat" target="_blank" class="button">Open Bhindi Chat</a>
+            <p style="margin-top: 15px;">In the chat, you can ask JARVIS anything and it will have access to all your connected apps!</p>
+        </div>
+        
+        <div class="step">
+            <h2>🎯 What You Can Do</h2>
+            <div class="code-block">
+                <code>
+"Check my emails from today"<br>
+"What's the weather in Delhi?"<br>
+"Create a GitHub issue in my repo"<br>
+"Schedule a meeting for tomorrow at 3 PM"<br>
+"Remind me to call mom at 5 PM"<br>
+"Search for latest AI news"<br>
+"Show my GitHub repositories"<br>
+                </code>
+            </div>
+        </div>
+        
+        <div class="step">
+            <h2>🚀 Alternative: Use This Interface</h2>
+            <p>You can also use the JARVIS interface on this site, but it will have limited features until you connect Bhindi AI.</p>
+            <a href="jarvis.html" class="button">Open JARVIS Interface</a>
+            <p style="margin-top: 15px; color: #FFA500;">Note: Some features require Bhindi AI connection</p>
+        </div>
+        
+        <div class="step">
+            <h2>📚 Documentation</h2>
+            <p>Need help? Check out these resources:</p>
+            <a href="https://docs.bhindi.io" target="_blank" class="button">Bhindi Docs</a>
+            <a href="./README.md" class="button">JARVIS README</a>
+            <a href="./SETUP.md" class="button">Setup Guide</a>
+        </div>
+        
+        <div style="text-align: center; margin-top: 40px; color: #FFA500;">
+            <p>Built with ❤️ by Aptik Pandey</p>
+            <p style="margin-top: 10px;">Powered by <a href="https://bhindi.io" style="color: #FFD700;">Bhindi AI</a></p>
+        </div>
+    </div>
+    
+    <script>
+        // Check if user is logged into Bhindi
+        async function checkBhindiConnection() {
+            try {
+                const response = await fetch('https://api.bhindi.io/v1/status', {
+                    credentials: 'include'
+                });
+                
+                if (response.ok) {
+                    const status = document.getElementById('status');
+                    status.className = 'status connected';
+                    status.innerHTML = '<h3>✅ Bhindi AI Connected!</h3><p>You can now use JARVIS with full capabilities</p>';
+                }
+            } catch (error) {
+                console.log('Bhindi not connected');
+            }
+        }
+        
+        checkBhindiConnection();
+    </script>
+</body>
+</html>
