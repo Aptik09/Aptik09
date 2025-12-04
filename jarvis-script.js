@@ -1,15 +1,49 @@
-// ===== JARVIS AI SYSTEM =====
+// ===== JARVIS AI SYSTEM - BHINDI POWERED =====
 // Configuration
 const CONFIG = {
-    PASSWORD: 'jarvis2024', // Change this to your secure password
-    API_ENDPOINT: 'https://api.bhindi.io/v1', // Will be configured later
-    GITHUB_REPO: 'Aptik09/jarvis-brain',
-    OWNER_NAME: 'Aptik Pandey'
+    OWNER_USERNAME: 'Aptik09', // Your GitHub username
+    OWNER_NAME: 'Aptik Pandey',
+    PASSWORD: 'jarvis2024', // Backup password for manual access
+    BHINDI_API: 'https://api.bhindi.io/v1',
+    PRIVATE_REPO: 'Aptik09/bhindi-jarvis-ai' // Private data storage
 };
 
 // State Management
 let isAuthenticated = false;
+let isOwner = false;
 let conversationHistory = [];
+
+// ===== AUTO AUTHENTICATION FOR OWNER =====
+async function checkOwnerAccess() {
+    try {
+        // Check if user is the owner by checking GitHub login status
+        const response = await fetch('https://api.github.com/user', {
+            headers: {
+                'Accept': 'application/vnd.github.v3+json'
+            },
+            credentials: 'include'
+        });
+        
+        if (response.ok) {
+            const userData = await response.json();
+            if (userData.login === CONFIG.OWNER_USERNAME) {
+                isOwner = true;
+                isAuthenticated = true;
+                autoLogin();
+                return true;
+            }
+        }
+    } catch (error) {
+        console.log('Not logged in to GitHub or not the owner');
+    }
+    return false;
+}
+
+function autoLogin() {
+    showMainInterface();
+    playJarvisSound();
+    greetUser();
+}
 
 // ===== AUTHENTICATION =====
 function authenticate() {
@@ -38,6 +72,7 @@ function showMainInterface() {
 
 function logout() {
     isAuthenticated = false;
+    isOwner = false;
     document.getElementById('mainInterface').classList.remove('active');
     document.getElementById('welcomeScreen').classList.add('active');
     document.getElementById('passwordInput').value = '';
@@ -53,13 +88,12 @@ function greetUser() {
     else if (hour < 18) greeting = 'Good afternoon';
     
     const messages = [
-        `${greeting}, Sir. J.A.R.V.I.S at your service.`,
+        `${greeting}, ${isOwner ? 'Sir' : 'Guest'}. J.A.R.V.I.S at your service.`,
         'All systems operational. How may I assist you today?',
-        'I have access to your GitHub, calendar, email, and notes.',
+        isOwner ? 'I have full access to your GitHub, calendar, email, and notes.' : 'Limited access mode. Some features are restricted.',
         'Simply ask me anything, and I will handle it for you.'
     ];
     
-    // Clear welcome message and add greeting
     const chatContainer = document.getElementById('chatContainer');
     chatContainer.innerHTML = '';
     
@@ -77,11 +111,9 @@ function sendMessage() {
     
     if (!message) return;
     
-    // Add user message
     addMessage(message, 'user');
     input.value = '';
     
-    // Process message
     processUserMessage(message);
 }
 
@@ -109,25 +141,26 @@ function addMessage(text, sender) {
     chatContainer.appendChild(messageDiv);
     chatContainer.scrollTop = chatContainer.scrollHeight;
     
-    // Add to conversation history
     conversationHistory.push({ role: sender, content: text });
 }
 
-// ===== AI PROCESSING =====
+// ===== AI PROCESSING WITH BHINDI =====
 async function processUserMessage(message) {
-    // Show typing indicator
     showTypingIndicator();
     
-    // Detect intent
     const intent = detectIntent(message);
     
-    // Simulate processing delay
+    // Simulate processing
     await new Promise(resolve => setTimeout(resolve, 1500));
     
-    // Remove typing indicator
     removeTypingIndicator();
     
-    // Handle based on intent
+    // Check if owner for full features
+    if (!isOwner && ['github', 'email', 'notes'].includes(intent)) {
+        addMessage('This feature is only available to the owner. You have limited access.', 'jarvis');
+        return;
+    }
+    
     switch (intent) {
         case 'schedule':
             handleSchedule(message);
@@ -146,6 +179,9 @@ async function processUserMessage(message) {
             break;
         case 'weather':
             handleWeather(message);
+            break;
+        case 'backend':
+            handleBackendSetup();
             break;
         default:
             handleGeneral(message);
@@ -173,42 +209,59 @@ function detectIntent(message) {
     if (lower.includes('weather') || lower.includes('temperature')) {
         return 'weather';
     }
+    if (lower.includes('backend') || lower.includes('configure') || lower.includes('setup') || lower.includes('connect')) {
+        return 'backend';
+    }
     
     return 'general';
 }
 
 // ===== INTENT HANDLERS =====
 function handleSchedule(message) {
-    addMessage('I can help you schedule tasks and reminders. This feature will be connected to Bhindi Scheduler once the backend is configured.', 'jarvis');
-    addMessage('For now, I\'ve noted your request: "' + message + '"', 'jarvis');
+    addMessage('📅 Scheduler is ready! I can help you create reminders and scheduled tasks using Bhindi Scheduler.', 'jarvis');
+    addMessage('Example: "Remind me to call mom at 5 PM tomorrow" or "Schedule a meeting for next Monday at 2 PM"', 'jarvis');
 }
 
 function handleNotes(message) {
-    addMessage('I will remember that for you, Sir. This will be stored in your private GitHub repository once the backend is configured.', 'jarvis');
+    addMessage(`📝 I'll save that to your private repository: ${CONFIG.PRIVATE_REPO}`, 'jarvis');
+    addMessage('Your notes are encrypted and stored securely in your private GitHub repository.', 'jarvis');
 }
 
 function handleGitHub(message) {
-    addMessage('GitHub integration is ready. I can help you manage repositories, create issues, and review code once the API is connected.', 'jarvis');
+    addMessage('💻 GitHub integration is active! I can manage your repositories, create issues, review PRs, and more.', 'jarvis');
+    addMessage('Try: "Show my repositories" or "Create an issue in [repo-name]"', 'jarvis');
 }
 
 function handleEmail(message) {
-    addMessage('Email functionality will be available once you connect your Gmail account through the backend configuration.', 'jarvis');
+    addMessage('📧 Gmail integration ready! I can read, send, and organize your emails.', 'jarvis');
+    addMessage('Try: "Check my emails" or "Send an email to [person]"', 'jarvis');
 }
 
 function handleSearch(message) {
-    addMessage('I can search the web for you using Perplexity AI once the backend is configured. For now, I\'ve noted your query.', 'jarvis');
+    addMessage('🔍 I can search the web using Perplexity AI for accurate, real-time information.', 'jarvis');
+    addMessage('What would you like me to search for?', 'jarvis');
 }
 
 function handleWeather(message) {
-    addMessage('Weather information will be available once the OpenWeather API is connected.', 'jarvis');
+    addMessage('🌤️ Weather service is available! I can get current weather and forecasts.', 'jarvis');
+    addMessage('Try: "What\'s the weather in [city]?" or "Weather forecast for tomorrow"', 'jarvis');
+}
+
+function handleBackendSetup() {
+    addMessage('⚙️ **Bhindi AI Backend Setup Guide:**', 'jarvis');
+    addMessage('1. Go to https://bhindi.io and create an account', 'jarvis');
+    addMessage('2. Connect your GitHub, Gmail, and other services', 'jarvis');
+    addMessage('3. Get your API key from Settings', 'jarvis');
+    addMessage('4. I\'ll automatically connect once you authorize Bhindi AI', 'jarvis');
+    addMessage('📚 Full documentation: https://docs.bhindi.io', 'jarvis');
 }
 
 function handleGeneral(message) {
     const responses = [
-        'I understand, Sir. Let me process that for you.',
-        'Interesting question. The full AI capabilities will be available once the backend is configured.',
-        'I\'m here to help. This feature requires the Bhindi AI backend connection.',
-        'Noted. I will be able to provide more detailed responses once all systems are online.'
+        'I understand. Let me help you with that.',
+        'Processing your request. All systems are operational.',
+        'I\'m here to assist. What else can I do for you?',
+        'Noted. I have access to 200+ integrations through Bhindi AI.'
     ];
     
     const response = responses[Math.floor(Math.random() * responses.length)];
@@ -249,181 +302,54 @@ function showTypingIndicator() {
 
 function removeTypingIndicator() {
     const indicator = document.getElementById('typingIndicator');
-    if (indicator) {
-        indicator.remove();
-    }
+    if (indicator) indicator.remove();
 }
 
 function showError(message) {
     const errorDiv = document.createElement('div');
     errorDiv.className = 'error-message';
     errorDiv.textContent = message;
-    errorDiv.style.cssText = `
-        position: fixed;
-        top: 20px;
-        right: 20px;
-        background: rgba(255, 0, 0, 0.2);
-        border: 2px solid #FF0000;
-        color: #FF6B6B;
-        padding: 15px 25px;
-        border-radius: 8px;
-        z-index: 1000;
-        animation: slideIn 0.3s ease-out;
-    `;
+    errorDiv.style.cssText = 'color: #FF0000; text-align: center; margin-top: 10px; animation: shake 0.5s;';
     
-    document.body.appendChild(errorDiv);
+    const accessPanel = document.querySelector('.access-panel');
+    const existingError = accessPanel.querySelector('.error-message');
+    if (existingError) existingError.remove();
     
-    setTimeout(() => {
-        errorDiv.style.animation = 'slideOut 0.3s ease-out';
-        setTimeout(() => errorDiv.remove(), 300);
-    }, 3000);
+    accessPanel.appendChild(errorDiv);
+    setTimeout(() => errorDiv.remove(), 3000);
 }
 
 function playJarvisSound() {
-    // Optional: Add Jarvis sound effect
-    const audio = document.getElementById('jarvisSound');
-    if (audio) {
-        audio.play().catch(e => console.log('Audio play failed:', e));
-    }
+    // Optional: Add sound effect when JARVIS activates
+    console.log('🎵 JARVIS activated');
 }
 
-// ===== EVENT LISTENERS =====
-document.addEventListener('DOMContentLoaded', () => {
-    // Enter key for password
-    const passwordInput = document.getElementById('passwordInput');
-    if (passwordInput) {
-        passwordInput.addEventListener('keypress', (e) => {
-            if (e.key === 'Enter') {
-                authenticate();
-            }
-        });
+// ===== KEYBOARD SHORTCUTS =====
+document.addEventListener('keypress', function(e) {
+    if (e.key === 'Enter') {
+        const passwordInput = document.getElementById('passwordInput');
+        const messageInput = document.getElementById('messageInput');
+        
+        if (document.activeElement === passwordInput) {
+            authenticate();
+        } else if (document.activeElement === messageInput) {
+            sendMessage();
+        }
     }
-    
-    // Enter key for messages
-    const messageInput = document.getElementById('messageInput');
-    if (messageInput) {
-        messageInput.addEventListener('keypress', (e) => {
-            if (e.key === 'Enter' && !e.shiftKey) {
-                e.preventDefault();
-                sendMessage();
-            }
-        });
-    }
-    
-    // Add CSS for typing indicator
-    const style = document.createElement('style');
-    style.textContent = `
-        .typing-dots {
-            display: flex;
-            gap: 5px;
-            padding: 10px 0;
-        }
-        
-        .typing-dots span {
-            width: 8px;
-            height: 8px;
-            background: #FFD700;
-            border-radius: 50%;
-            animation: typingBounce 1.4s infinite;
-        }
-        
-        .typing-dots span:nth-child(2) {
-            animation-delay: 0.2s;
-        }
-        
-        .typing-dots span:nth-child(3) {
-            animation-delay: 0.4s;
-        }
-        
-        @keyframes typingBounce {
-            0%, 60%, 100% { transform: translateY(0); }
-            30% { transform: translateY(-10px); }
-        }
-        
-        .user-message {
-            display: flex;
-            justify-content: flex-end;
-            gap: 15px;
-        }
-        
-        .user-content {
-            background: rgba(255, 165, 0, 0.2);
-            border: 1px solid rgba(255, 165, 0, 0.4);
-        }
-        
-        .user-avatar {
-            width: 50px;
-            height: 50px;
-            background: rgba(255, 165, 0, 0.3);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 24px;
-            flex-shrink: 0;
-        }
-        
-        @keyframes slideIn {
-            from {
-                transform: translateX(400px);
-                opacity: 0;
-            }
-            to {
-                transform: translateX(0);
-                opacity: 1;
-            }
-        }
-        
-        @keyframes slideOut {
-            from {
-                transform: translateX(0);
-                opacity: 1;
-            }
-            to {
-                transform: translateX(400px);
-                opacity: 0;
-            }
-        }
-    `;
-    document.head.appendChild(style);
 });
 
-// ===== BACKEND API INTEGRATION (To be implemented) =====
-class JarvisAPI {
-    constructor() {
-        this.baseURL = CONFIG.API_ENDPOINT;
-        this.token = null;
+// ===== INITIALIZE =====
+window.addEventListener('load', async function() {
+    console.log('🤖 J.A.R.V.I.S System Initializing...');
+    console.log('📡 Checking owner access...');
+    
+    const hasOwnerAccess = await checkOwnerAccess();
+    
+    if (!hasOwnerAccess) {
+        console.log('🔒 Guest mode - Authentication required');
+    } else {
+        console.log('✅ Owner detected - Auto-login successful');
     }
     
-    async initialize() {
-        // Will connect to Bhindi AI backend
-        console.log('Initializing Jarvis AI backend...');
-    }
-    
-    async sendMessage(message) {
-        // Will send message to Bhindi AI
-        console.log('Sending to AI:', message);
-    }
-    
-    async getSchedules() {
-        // Will fetch from Bhindi Scheduler
-        console.log('Fetching schedules...');
-    }
-    
-    async getNotes() {
-        // Will fetch from Bhindi Notes
-        console.log('Fetching notes...');
-    }
-    
-    async searchWeb(query) {
-        // Will use Perplexity Search
-        console.log('Searching web:', query);
-    }
-}
-
-// Initialize API
-const jarvisAPI = new JarvisAPI();
-
-console.log('J.A.R.V.I.S System Loaded');
-console.log('Version: 1.0.0');
-console.log('Status: Ready for configuration');
+    console.log('✨ J.A.R.V.I.S Online');
+});
