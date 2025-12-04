@@ -1,30 +1,43 @@
-# 🤖 Welcome to My Digital Workshop
-
 <div align="center">
 
-### 👨‍💻 Aptik Pandey | AI Enthusiast | Full-Stack Developer
+# 🤖 J.A.R.V.I.S - Personal AI Assistant
 
-[![Email](https://img.shields.io/badge/Email-D14836?logo=gmail&logoColor=white)](mailto:aptikpandey9@gmail.com)
+### *"Just a man in a cave with a box of scraps... building the future"*
 
-</div>
-
-
+[![Access AI Assistant](https://img.shields.io/badge/🤖_Access_AI_Assistant-Click_Here-00D9FF?style=for-the-badge)](https://aptik09.github.io/Aptik09/)
 
 ---
 
-## 🚀 Access My AI Assistant
+## 💫 About Me
 
-<div align="center">
+**Aptik Pandey** | Computer Science Engineering @ **Thapar Institute (TIET)**
 
-### [🤖 Enter AI Assistant Portal →](https://aptik09.github.io/Aptik09/)
+Passionate developer building clean, modern, and impactful digital experiences.
 
-*Your personal AI assistant powered by Open  AI*
-
-</div>
+🤖 **AI & Automation** • 🌐 **Web Development** • 🎬 **Content Creation** • 🚀 **Innovation**
 
 ---
 
-## 💻 Tech Arsenal
+## 💭 Quote of the Day
+
+*"Sometimes you gotta run before you can walk"* - Tony Stark
+
+---
+
+## 🚀 What I'm Building
+
+Building my own **Iron Man-style AI assistant** powered by Bhindi AI:
+
+🧠 **200+ Integrations** - GitHub, Gmail, Calendar, Slack & more  
+🎯 **Smart Automation** - Task scheduling, reminders, workflows  
+🗣️ **Voice Interface** - Natural language interaction  
+💾 **Memory System** - Remembers context & preferences  
+🔍 **Web Intelligence** - Real-time search & information  
+⚡ **Lightning Fast** - Instant responses & actions
+
+---
+
+## 💻 Tech Stack
 
 ![HTML5](https://img.shields.io/badge/html5-%23E34F26.svg?style=for-the-badge&logo=html5&logoColor=white)
 ![CSS3](https://img.shields.io/badge/css3-%231572B6.svg?style=for-the-badge&logo=css3&logoColor=white)
@@ -33,28 +46,13 @@
 
 ---
 
-## 🎓 About Me
-
-Computer Science Engineering student at **Thapar Institute (TIET)** with a passion for:
-
-- 🤖 **AI & Automation** - Building intelligent systems
-- 🌐 **Web Development** - Creating modern digital experiences  
-- 🎬 **Content Creation** - YouTube growth, editing, and design
-- 🚀 **Innovation** - Turning ideas into reality
-
----
-
 ## 📊 GitHub Stats
-
-<div align="center">
 
 ![](https://github-readme-stats.vercel.app/api?username=aptik09&theme=radical&hide_border=true&include_all_commits=false&count_private=false)
 
 ![](https://nirzak-streak-stats.vercel.app/?user=aptik09&theme=radical&hide_border=true)
 
 ![](https://github-readme-stats.vercel.app/api/top-langs/?username=aptik09&theme=radical&hide_border=true&include_all_commits=false&count_private=false&layout=compact)
-
-</div>
 
 ---
 
@@ -64,9 +62,13 @@ Computer Science Engineering student at **Thapar Institute (TIET)** with a passi
 
 ---
 
-<div align="center">
+## 🌐 Connect With Me
 
-### ✨ *Always learning. Always building. Always leveling up.* ✨
+[![Email](https://img.shields.io/badge/Email-D14836?logo=gmail&logoColor=white)](mailto:aptikpandey9@gmail.com)
+
+---
+
+### ✨ *"I am Iron Man"* ✨
 
 [![](https://visitcount.itsvg.in/api?id=aptik09&icon=2&color=6)](https://visitcount.itsvg.in)
 
