@@ -3,8 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>J.A.R.V.I.S - Just A Rather Very Intelligent System</title>
+    <title>J.A.R.V.I.S - Personal AI Assistant</title>
     <link rel="stylesheet" href="jarvis-styles.css">
+    <meta name="description" content="J.A.R.V.I.S - Just A Rather Very Intelligent System. Personal AI Assistant for Aptik Pandey.">
 </head>
 <body>
     <!-- Background particles -->
@@ -23,33 +24,34 @@
             </div>
         </div>
 
-        <!-- Welcome Screen -->
+        <!-- Welcome Screen (Lock Screen for non-owners) -->
         <div id="welcomeScreen" class="welcome-screen active">
             <h1 class="glitch-text">J.A.R.V.I.S</h1>
             <p class="subtitle">Just A Rather Very Intelligent System</p>
-            <p class="owner-text">Private AI Assistant for Aptik Pandey</p>
+            <p class="owner-text">Personal AI Assistant - Powered by Bhindi AI</p>
             
             <div class="access-panel">
                 <div class="lock-icon">🔒</div>
+                <p class="access-info">Checking authentication...</p>
                 <input type="password" id="passwordInput" placeholder="Enter Access Code" class="password-input">
                 <button onclick="authenticate()" class="access-button">
-                    <span>AUTHENTICATE</span>
+                    <span>UNLOCK</span>
                 </button>
-                <p class="warning-text">⚠️ Unauthorized access is prohibited</p>
+                <p class="warning-text">⚠️ Authorized personnel only</p>
             </div>
 
             <div class="system-status">
                 <div class="status-item">
-                    <span class="status-label">System Status:</span>
+                    <span class="status-label">System:</span>
                     <span class="status-value online">ONLINE</span>
                 </div>
                 <div class="status-item">
                     <span class="status-label">Security:</span>
-                    <span class="status-value">MAXIMUM</span>
+                    <span class="status-value">ACTIVE</span>
                 </div>
                 <div class="status-item">
                     <span class="status-label">AI Core:</span>
-                    <span class="status-value online">ACTIVE</span>
+                    <span class="status-value online">READY</span>
                 </div>
             </div>
         </div>
@@ -70,13 +72,7 @@
 
             <!-- Chat Container -->
             <div class="chat-container" id="chatContainer">
-                <div class="welcome-message">
-                    <div class="jarvis-avatar"></div>
-                    <div class="message-content">
-                        <p><strong>Good evening, Sir.</strong></p>
-                        <p>J.A.R.V.I.S at your service. How may I assist you today?</p>
-                    </div>
-                </div>
+                <!-- Messages will be added here dynamically -->
             </div>
 
             <!-- Input Area -->
