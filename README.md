@@ -1,4 +1,4 @@
-<div align="center">
+<!-- <div align="center">
 
 # 👋 Welcome to Aptik Pandey's Digital Universe
 
@@ -21,7 +21,7 @@
 
 ---
 
-</div>
+</div> -->
 
 ## 💫 About Me
 
