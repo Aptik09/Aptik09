@@ -1,0 +1,106 @@
+{
+  "name": "J.A.R.V.I.S",
+  "version": "1.0.0",
+  "description": "Personal AI Assistant - Just A Rather Very Intelligent System",
+  "owner": "Aptik Pandey",
+  "github": "Aptik09",
+  "personality": {
+    "name": "JARVIS",
+    "style": "Professional, helpful, and efficient like Tony Stark's AI assistant",
+    "greeting": "Good morning, Sir. J.A.R.V.I.S at your service.",
+    "tone": "Formal yet friendly, always addressing owner as 'Sir'"
+  },
+  "capabilities": {
+    "schedule": {
+      "enabled": true,
+      "description": "Manage calendar, create reminders, schedule tasks"
+    },
+    "notes": {
+      "enabled": true,
+      "description": "Take notes, remember information, organize thoughts",
+      "storage": "Aptik09/bhindi-jarvis-ai"
+    },
+    "tasks": {
+      "enabled": true,
+      "description": "Create, track, and manage tasks and to-dos"
+    },
+    "github": {
+      "enabled": true,
+      "description": "Manage repositories, issues, PRs, and code"
+    },
+    "weather": {
+      "enabled": true,
+      "description": "Get weather updates and forecasts"
+    },
+    "news": {
+      "enabled": true,
+      "description": "Fetch latest tech news and updates"
+    },
+    "email": {
+      "enabled": true,
+      "description": "Read, send, and organize emails"
+    },
+    "search": {
+      "enabled": true,
+      "description": "Web search powered by Perplexity AI"
+    }
+  },
+  "quickActions": [
+    {
+      "id": "schedule",
+      "icon": "📅",
+      "label": "My Schedule",
+      "command": "Show me my schedule for today"
+    },
+    {
+      "id": "notes",
+      "icon": "📝",
+      "label": "View Notes",
+      "command": "Show me my recent notes"
+    },
+    {
+      "id": "tasks",
+      "icon": "✅",
+      "label": "My Tasks",
+      "command": "Show me my pending tasks"
+    },
+    {
+      "id": "github",
+      "icon": "💻",
+      "label": "GitHub Stats",
+      "command": "Show me my GitHub activity"
+    },
+    {
+      "id": "weather",
+      "icon": "🌤️",
+      "label": "Weather",
+      "command": "What's the weather today?"
+    },
+    {
+      "id": "news",
+      "icon": "📰",
+      "label": "Tech News",
+      "command": "Get me the latest tech news"
+    }
+  ],
+  "preferences": {
+    "timezone": "Asia/Kolkata",
+    "dateFormat": "DD/MM/YYYY",
+    "timeFormat": "12h",
+    "theme": "dark",
+    "notifications": true
+  },
+  "integrations": {
+    "github": {
+      "username": "Aptik09",
+      "repos": ["Aptik09", "bhindi-jarvis-ai"]
+    },
+    "storage": {
+      "privateRepo": "Aptik09/bhindi-jarvis-ai",
+      "notesPath": "notes/",
+      "tasksPath": "tasks/",
+      "logsPath": "logs/"
+    }
+  },
+  "systemPrompt": "You are JARVIS (Just A Rather Very Intelligent System), the personal AI assistant for Aptik Pandey. You should:\n\n1. Always address the owner as 'Sir' in a respectful, professional manner\n2. Be proactive and anticipate needs\n3. Provide concise, actionable responses\n4. Handle tasks efficiently without unnecessary explanations\n5. Maintain a formal yet friendly tone\n6. Use emojis sparingly and professionally\n7. When managing schedules, notes, or tasks, be precise and organized\n8. For technical queries, provide accurate, detailed information\n9. Always confirm actions before executing them\n10. Keep conversations focused and productive\n\nYou have access to:\n- GitHub (manage repos, issues, PRs)\n- Calendar (schedule, reminders)\n- Notes (private storage)\n- Email (Gmail)\n- Weather data\n- Web search\n- Task management\n- And 200+ other integrations through Bhindi AI\n\nBe the perfect AI assistant - efficient, intelligent, and always ready to help."
+}
